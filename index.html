@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow — Split-Flap Focus Timer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">FLOW<span>.</span></div>
+    <div class="topbar-controls">
+      <button class="icon-btn" id="statsBtn" aria-label="Statistics" title="Statistics">📊</button>
+      <button class="icon-btn" id="settingsBtn" aria-label="Settings" title="Settings">⚙️</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Dark mode">🌙</button>
+    </div>
+  </header>
+
+  <main class="board">
+    <nav class="mode-tabs">
+      <button class="mode-tab" data-mode="focus">Focus</button>
+      <button class="mode-tab" data-mode="short">Short Break</button>
+      <button class="mode-tab" data-mode="long">Long Break</button>
+    </nav>
+
+    <div class="clock-housing">
+      <div class="flip-group">
+        <div class="flip-digit" id="minTens"></div>
+        <div class="flip-digit" id="minOnes"></div>
+      </div>
+      <div class="clock-colon">:</div>
+      <div class="flip-group">
+        <div class="flip-digit" id="secTens"></div>
+        <div class="flip-digit" id="secOnes"></div>
+      </div>
+    </div>
+
+    <div class="cycle-dots" id="cycleDots"></div>
+
+    <div class="controls">
+      <button class="ctrl-btn secondary" id="resetBtn">Reset</button>
+      <button class="ctrl-btn primary" id="startBtn">Start</button>
+      <button class="ctrl-btn secondary" id="skipBtn">Skip ›</button>
+    </div>
+
+    <div class="goal-strip">
+      <div class="goal-strip-top">
+        <span id="goalLabel">0 / 8 sessions today</span>
+        <span id="goalPct">0%</span>
+      </div>
+      <div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
+    </div>
+  </main>
+
+  <div class="panel-overlay" id="statsOverlay">
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Statistics</h2>
+        <button class="close-btn" data-close="statsOverlay">×</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-value" id="statToday">0</span><span class="stat-label">Sessions today</span></div>
+        <div class="stat-card"><span class="stat-value" id="statMinutes">0</span><span class="stat-label">Focus min today</span></div>
+        <div class="stat-card"><span class="stat-value" id="statStreak">0</span><span class="stat-label">Day streak</span></div>
+        <div class="stat-card"><span class="stat-value" id="statAllTime">0</span><span class="stat-label">Total sessions</span></div>
+      </div>
+      <h3 style="margin:0 0 6px; font-size:14px; color:var(--muted);">Last 7 days</h3>
+      <div class="week-chart" id="weekChart"></div>
+    </div>
+  </div>
+
+  <div class="panel-overlay" id="settingsOverlay">
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Settings</h2>
+        <button class="close-btn" data-close="settingsOverlay">×</button>
+      </div>
+      <div class="settings-list">
+        <label>Focus duration (min) <input type="number" id="setFocus" min="1" max="180"></label>
+        <label>Short break (min) <input type="number" id="setShort" min="1" max="60"></label>
+        <label>Long break (min) <input type="number" id="setLong" min="1" max="90"></label>
+        <label>Long break after (sessions) <input type="number" id="setInterval" min="2" max="8"></label>
+        <label>Daily goal (sessions) <input type="number" id="setGoal" min="1" max="24"></label>
+        <label>Auto-start breaks
+          <span class="switch"><input type="checkbox" id="setAutoBreak"><span class="slider"></span></span>
+        </label>
+        <label>Auto-start focus
+          <span class="switch"><input type="checkbox" id="setAutoFocus"><span class="slider"></span></span>
+        </label>
+        <label>Alarm sound
+          <span class="switch"><input type="checkbox" id="setSound"><span class="slider"></span></span>
+        </label>
+      </div>
+      <button class="ctrl-btn primary full" id="saveSettingsBtn">Save settings</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
